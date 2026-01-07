@@ -59,6 +59,8 @@ public class Network {
      *  If any of the two names is not a user in this network,
      *  or if the "follows" addition failed for some reason, returns false. */
     public boolean addFollowee(String name1, String name2) {
+        if (name1.equals(name2))
+            return false;      
         User u1 = this.getUser(name1);
         User u2 = this.getUser(name2);
         if (u1==null || u2==null){
@@ -69,7 +71,7 @@ public class Network {
     
     /** For the user with the given name, recommends another user to follow. The recommended user is
      *  the user that has the maximal mutual number of followees as the user with the given name. */
-    public User recommendWhoToFollow(String name) {
+    public String recommendWhoToFollow(String name) {
         User user = this.getUser(name);
         if (user==null)
             return null;
@@ -90,12 +92,14 @@ public class Network {
             }
         }
 
-        return recommend;
+        return recommend.getName();
     }
 
     /** Computes and returns the name of the most popular user in this network: 
      *  The user who appears the most in the follow lists of all the users. */
     public String mostPopularUser() {
+        if (this.userCount ==0)
+            return null;
         User popular = this.users[0];
         int max = this.followeeCount(this.users[0].getName());
         for (int i=1; i<this.userCount; i++){
@@ -129,7 +133,7 @@ public class Network {
        String ans = "Network:\n";
         for(int i=0; i<this.userCount;i++)
        {
-        ans = ans + this.users[i].toString() + ":\n";
+        ans = ans + this.users[i].toString() + "\n";
        }
        return ans;
     }
