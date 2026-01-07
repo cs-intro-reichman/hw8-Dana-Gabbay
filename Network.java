@@ -58,14 +58,14 @@ public class Network {
     /** Makes the user with name1 follow the user with name2. If successful, returns true.
      *  If any of the two names is not a user in this network,
      *  or if the "follows" addition failed for some reason, returns false. */
-    public boolean addFollowee(String name1, String name2) {
-        if (name1.equals(name2))
-            return false;      
+    public boolean addFollowee(String name1, String name2) {    
         User u1 = this.getUser(name1);
         User u2 = this.getUser(name2);
         if (u1==null || u2==null){
             return false;
         }
+         if (name1.equals(name2))
+            return false;  
         return u1.addFollowee(name2);
     }
     
@@ -133,7 +133,10 @@ public class Network {
        String ans = "Network:\n";
         for(int i=0; i<this.userCount;i++)
        {
-        ans = ans + this.users[i].toString() + "\n";
+        ans = ans + this.users[i].toString();
+        if (i< this.userCount-1){
+            ans = ans+ "\n";
+        }
        }
        return ans;
     }
